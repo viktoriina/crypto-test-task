@@ -13,7 +13,7 @@ const (
 	pathEndpoint = "/api/v3/avgPrice"
 )
 
-func GetPrice(w http.ResponseWriter, r *http.Request) {
+func GetBasePrice() string {
 	_url, _ := url.ParseRequestURI(baseUrl)
 	_url.Path = pathEndpoint
 	parameters := url.Values{}
@@ -33,6 +33,12 @@ func GetPrice(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	}
 
+	return price.Price
+}
+
+func GetPrice(w http.ResponseWriter, r *http.Request) {
+	price := GetBasePrice()
+
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("{rate:%s}", price.Price)))
+	w.Write([]byte(fmt.Sprintf("{rate:%s}", price)))
 }

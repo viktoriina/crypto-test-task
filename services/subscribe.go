@@ -24,7 +24,15 @@ func Subscribe(w http.ResponseWriter, r *http.Request) {
 		if _, err := mail.ParseAddress(email.Email); err == nil {
 			fmt.Println(email.Email)
 			helpers.SaveEmail(email.Email)
+		} else {
+			w.WriteHeader(http.StatusConflict)
+			w.Write([]byte(""))
+			return
 		}
+	} else {
+		w.WriteHeader(http.StatusConflict)
+		w.Write([]byte(""))
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)

@@ -14,6 +14,7 @@ func main() {
 
 	router.Get("/api/rate", services.GetPrice)
 	router.Post("/api/subscribe", services.Subscribe)
+	router.Post("/api/sendEmails", services.SendEmails)
 
 	http.ListenAndServe(":3000", router)
 }
