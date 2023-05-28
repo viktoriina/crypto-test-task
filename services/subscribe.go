@@ -1,7 +1,9 @@
 package services
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/mail"
 
@@ -9,12 +11,19 @@ import (
 )
 
 func Subscribe(w http.ResponseWriter, r *http.Request) {
-	email := r.URL.Query().Get("email")
+	reqBody, _ := ioutil.ReadAll(r.Body)
 
-	fmt.Println(email)
-	if email != "" {
-		if _, err := mail.ParseAddress(email); err != nil {
-			helpers.SaveEmail(email)
+	var email struct {
+		Email string `json:"email"`
+	}
+
+	json.Unmarshal(reqBody, &email)
+
+	fmt.Println(email.Email)
+	if email.Email != "" {
+		if _, err := mail.ParseAddress(email.Email); err == nil {
+			fmt.Println(email.Email)
+			helpers.SaveEmail(email.Email)
 		}
 	}
 
