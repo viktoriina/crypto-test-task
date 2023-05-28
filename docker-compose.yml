@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  crypto-test-task:
+    image: crypto-test-task
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"

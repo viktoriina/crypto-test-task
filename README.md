@@ -15,3 +15,9 @@ Build docker container:
 ```docker
 docker run -p 8080:8080 crypto-test-task
 ```
+
+## Docker compose:
+
+```docker
+docker compose up
+```
