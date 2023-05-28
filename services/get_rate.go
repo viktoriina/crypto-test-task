@@ -13,7 +13,7 @@ const (
 	pathEndpoint = "/api/v3/avgPrice"
 )
 
-func GetBasePrice() string {
+func GetBasePrice() (string, error) {
 	_url, _ := url.ParseRequestURI(baseUrl)
 	_url.Path = pathEndpoint
 	parameters := url.Values{}
@@ -31,13 +31,20 @@ func GetBasePrice() string {
 	err := json.Unmarshal([]byte(responseBody), &price)
 	if err != nil {
 		fmt.Println(err.Error())
+		return "", err
 	}
 
-	return price.Price
+	return price.Price, nil
 }
 
 func GetPrice(w http.ResponseWriter, r *http.Request) {
-	price := GetBasePrice()
+	price, err := GetBasePrice()
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(""))
+		return
+	}
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(fmt.Sprintf("{rate:%s}", price)))

@@ -20,7 +20,13 @@ func SendEmails(w http.ResponseWriter, r *http.Request) {
 
 	emails_to_send := helpers.ExtractEmails()
 
-	price := GetBasePrice()
+	price, err := GetBasePrice()
+
+	if err != nil {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(err.Error()))
+		return
+	}
 
 	for i := 0; i < len(emails_to_send); i++ {
 		email := emails_to_send[i]

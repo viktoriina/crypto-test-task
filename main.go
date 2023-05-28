@@ -16,5 +16,5 @@ func main() {
 	router.Post("/api/subscribe", services.Subscribe)
 	router.Post("/api/sendEmails", services.SendEmails)
 
-	http.ListenAndServe(":3000", router)
+	http.ListenAndServe(":8080", router)
 }
