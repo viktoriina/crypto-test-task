@@ -13,6 +13,7 @@ func main() {
 	router.Use(middleware.Logger)
 
 	router.Get("/api/rate", services.GetPrice)
+	router.Post("/api/subscribe", services.Subscribe)
 
 	http.ListenAndServe(":3000", router)
 }
