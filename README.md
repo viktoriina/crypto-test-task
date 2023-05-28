@@ -1,4 +1,4 @@
-# Crypto Test Task
+# Task
 
 This is a test assignment for Genesis SE school.
 
